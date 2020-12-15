@@ -1,0 +1,77 @@
+{% extends 'master/master.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopTime</title>
+   
+
+</head>
+<body>
+   
+
+    {% block content %}
+    <br>
+    <br>
+<div class="container">
+  
+
+
+  {% for product in product %}
+    <div class="container">
+        <div class="row rowMyOrders mb-3">
+          <div class="col">
+            <img src="{{ product.image.url }}" alt="product image not found"
+            style="width: 100px; height: 50px;"
+            >
+            <input type="text" value="{{product.id}}" name="pid">
+          </div>
+          <div class="col">
+            <p class="productName"> {{ product.productName }}</p>
+          </div>
+
+          <div class="col">
+            
+            <p><b>&#8377;{{ product.price }}</b></p>
+          </div>
+         
+        </div>
+      
+        
+      </div>
+       
+    {% endfor %}
+    
+    <form action="" id="form" method="POST">
+      {% csrf_token %}
+     
+        <select class="form-select" aria-label="Default select example" name="rating">
+          <option selected>  Rate this product </option>
+          <option value="1">Very Bad</option>
+          <option value="2">Bad</option>
+          <option value="3">Good</option>
+          <option value="4">Very Good</option>
+          <option value="5">Excellent</option>
+        </select>
+     
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Review this product</label>
+        <textarea class="form-control" name="review" rows="3"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <button class="btn btn-dark"  >SUBMIT</button>
+      </div>
+
+    </form>
+    
+</div>
+
+
+    {% endblock %}
+
+</body>
+</html>

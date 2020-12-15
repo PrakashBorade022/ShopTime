@@ -1,0 +1,86 @@
+{% extends 'master/master.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product information</title>
+</head>
+<body>
+   {% block content %}
+   
+   <div class="container">
+       {% for product in product%}
+       
+    <div class="card flex-row flex-wrap">
+        <div class="card-header border-0">
+            <img src="{{ product.image.url}}" alt="product image not fount"
+            style="height: 200px; width: 200px;">
+        </div>
+        <div class="card-block px-2">
+            <a href="/product/{{product.id}}" target="blank" class="card-title" > <h5 class="card-title">{{ product.productName}}</h5></a>
+            <p><b>&#8377; {{product.price}} Only</b></p>
+            <p class=" text-muted">{{ product.seller}}</p>
+           
+            <p class="badge bg-primary rating">{{product.averageRating}}  
+              <i class="fa fa-star" aria-hidden="true"></i>
+            </p>
+            <input type="text" class="form-control" name="productId" value="{{ proruct.id }}" 
+            style="display: none;">
+            
+            <form action="addToMyOrder/" method="POST">
+                {% csrf_token %}
+               
+                <input  style="display: none;" type="text" class="form-control" name="productId" value="{{ product.id }}" >
+                 <button class="btn btn-warning  btn-sm">Buy Now</button></span>
+            </form>
+            <!-- <form action="addToCart/{{product.productName}}/" method="POST">
+                {% csrf_token %}
+               
+              {% comment %} <span><button class="btn btn-dark btn-sm">Add to Cart</button> {% endcomment %}
+                 <button class="btn btn-dark  btn-sm">add to Cart</button></span>
+            </form> -->
+            
+        </div>
+       
+         <p class="card-text">
+             <b>Product description</b>
+             <br>
+             {{ product.description}}</p>
+            <br>
+            <br>
+            <p><b>Product Reviews</b></p>
+        <div class="card-footer w-100 ">
+            
+           {%if not product.reviewsRelatedName.all %}
+                <p>No reviews for this product</p>
+           {% else %}
+               
+                    {% for i in product.reviewsRelatedName.all %}
+                    <div class="card">
+                        <b>{{ i.reviewBy.first_name}} {{i.reviewBy.last_name}} </b> <br>
+                        <p class="text">{{ i.review }}</p>
+                       
+                        
+                    </div>
+                    <br>
+                       
+                    {% endfor %}
+           
+
+                </div>
+           {% endif %}
+
+           {% for i in product.ratingRalatedName.all %}
+                 hey {{ i.count }}
+           {% endfor%}
+
+           
+        </div>
+    </div>
+    {% endfor %}
+    
+</div>
+   {% endblock %}
+</body>
+</html>
